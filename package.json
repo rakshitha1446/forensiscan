@@ -1,0 +1,20 @@
+{
+  "name": "pixeltruth",
+  "version": "3.0.0",
+  "description": "PixelTruth – AI Content Forensic Analyzer (Image, Video, Audio, Text)",
+  "main": "BACKEND/server.js",
+  "scripts": {
+    "start": "node BACKEND/server.js",
+    "dev": "node BACKEND/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "sharp": "^0.34.5"
+  }
+}

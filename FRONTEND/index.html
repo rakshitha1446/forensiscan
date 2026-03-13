@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelTruth – AI Content Forensic Analyzer</title>
+  <meta name="description"
+    content="Detect whether images, videos, audio, or text are AI-generated or human-created using advanced multi-modal forensic analysis." />
+  <meta property="og:title" content="PixelTruth – AI Content Forensic Analyzer" />
+  <meta property="og:description"
+    content="Upload any media or paste text to instantly detect if it was created by AI or a human." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="url(#logoGrad)" stroke-width="2" />
+            <circle cx="16" cy="16" r="6" fill="url(#logoGrad)" opacity="0.8" />
+            <line x1="2" y1="16" x2="10" y2="16" stroke="url(#logoGrad)" stroke-width="2" />
+            <line x1="22" y1="16" x2="30" y2="16" stroke="url(#logoGrad)" stroke-width="2" />
+            <line x1="16" y1="2" x2="16" y2="10" stroke="url(#logoGrad)" stroke-width="2" />
+            <line x1="16" y1="22" x2="16" y2="30" stroke="url(#logoGrad)" stroke-width="2" />
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#00d4ff" />
+                <stop offset="100%" stop-color="#b14fff" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">Pixel<span class="logo-accent">Truth</span></span>
+      </div>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#upload" class="nav-link">Analyze</a>
+        <a href="#how-it-works" class="nav-link">How it Works</a>
+        <span class="nav-badge">v3.0</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span class="tag-dot" aria-hidden="true"></span>
+          Multi-Modal AI Forensic Engine
+        </div>
+        <h1 class="hero-title">
+          Is That Content<br />
+          <span class="gradient-text">AI-Generated?</span>
+        </h1>
+        <p class="hero-subtitle">
+          Upload any image, video, audio, or paste text — our advanced forensic engine analyzes multiple detection
+          vectors to determine its origin with high confidence.
+        </p>
+        <div class="hero-stats" role="list" aria-label="Detection statistics">
+          <div class="stat" role="listitem">
+            <span class="stat-value">4</span>
+            <span class="stat-label">Media Types</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat" role="listitem">
+            <span class="stat-value">24+</span>
+            <span class="stat-label">Detection Vectors</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat" role="listitem">
+            <span class="stat-value">&lt;5s</span>
+            <span class="stat-label">Analysis Time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upload Section -->
+  <section class="upload-section" id="upload">
+    <div class="container">
+      <div class="upload-wrapper">
+
+        <!-- Media Type Tabs -->
+        <div class="media-tabs glass-card" id="mediaTabs" role="tablist" aria-label="Content type selector">
+          <button class="media-tab active" data-type="image" role="tab" aria-selected="true" id="tab-image">
+            <span class="tab-icon">🖼️</span>
+            <span class="tab-text">Image</span>
+          </button>
+          <button class="media-tab" data-type="video" role="tab" aria-selected="false" id="tab-video">
+            <span class="tab-icon">🎬</span>
+            <span class="tab-text">Video</span>
+          </button>
+          <button class="media-tab" data-type="audio" role="tab" aria-selected="false" id="tab-audio">
+            <span class="tab-icon">🎵</span>
+            <span class="tab-text">Audio</span>
+          </button>
+          <button class="media-tab" data-type="text" role="tab" aria-selected="false" id="tab-text">
+            <span class="tab-icon">📝</span>
+            <span class="tab-text">Text</span>
+          </button>
+          <div class="tab-indicator" id="tabIndicator"></div>
+        </div>
+
+        <!-- File Drop Zone (for image/video/audio) -->
+        <div class="upload-card glass-card" id="uploadCard">
+          <div class="upload-zone" id="uploadZone" role="button" aria-label="Upload content for analysis" tabindex="0">
+            <input type="file" id="fileInput" class="file-input" aria-hidden="true" />
+            <div class="upload-inner" id="uploadInner">
+              <div class="upload-icon-wrapper">
+                <svg class="upload-icon" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+                  <rect width="56" height="56" rx="16" fill="url(#uploadBg)" />
+                  <path d="M28 18L28 38M28 18L22 24M28 18L34 24" stroke="white" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M18 40H38" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                  <defs>
+                    <linearGradient id="uploadBg" x1="0" y1="0" x2="56" y2="56">
+                      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3" />
+                      <stop offset="100%" stop-color="#b14fff" stop-opacity="0.3" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="upload-ripple" aria-hidden="true"></div>
+              </div>
+              <h2 class="upload-title" id="uploadTitle">Drop your image here</h2>
+              <p class="upload-subtitle">or <button class="upload-browse-btn" id="browseBtn" type="button">browse
+                  files</button> to upload</p>
+              <div class="upload-formats" id="uploadFormats">
+                <span class="format-tag">JPG</span>
+                <span class="format-tag">PNG</span>
+                <span class="format-tag">WEBP</span>
+                <span class="format-tag">BMP</span>
+              </div>
+              <p class="upload-limit" id="uploadLimit">Maximum file size: 50MB</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Input (for text mode) -->
+        <div class="text-input-card glass-card" id="textInputCard" style="display:none;">
+          <div class="text-input-header">
+            <h2 class="text-input-title">Paste your text below</h2>
+            <span class="text-char-count" id="charCount">0 characters</span>
+          </div>
+          <textarea id="textArea" class="text-area"
+            placeholder="Paste the text you want to analyze here. Minimum 20 characters required for accurate analysis..."
+            rows="10"></textarea>
+          <div class="text-input-actions">
+            <button class="btn btn-primary" id="analyzeTextBtn" type="button" disabled>Analyze Text</button>
+            <button class="btn btn-outline" id="clearTextBtn" type="button">Clear</button>
+          </div>
+        </div>
+
+        <!-- Preview + Results Panel (hidden initially) -->
+        <div class="analysis-panel" id="analysisPanel" aria-live="polite" aria-label="Analysis results panel">
+          <!-- Media Preview -->
+          <div class="preview-card glass-card" id="previewCard">
+            <div class="preview-header">
+              <span class="preview-label" id="previewLabel">Uploaded Content</span>
+              <button class="reset-btn" id="resetBtn" type="button" aria-label="Reset and upload new content">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path
+                    d="M2 8C2 4.686 4.686 2 8 2C10.122 2 11.99 3.1 13.066 4.75L14 3.75V7H10.75L12 5.75C11.226 4.674 9.694 4 8 4C5.79 4 4 5.79 4 8H2Z"
+                    fill="currentColor" />
+                  <path
+                    d="M14 8C14 11.314 11.314 14 8 14C5.878 14 4.01 12.9 2.934 11.25L2 12.25V9H5.25L4 10.25C4.774 11.326 6.306 12 8 12C10.21 12 12 10.21 12 8H14Z"
+                    fill="currentColor" />
+                </svg>
+                New Analysis
+              </button>
+            </div>
+            <div class="preview-media-wrapper" id="previewMediaWrapper">
+              <img id="previewImage" class="preview-image" src="" alt="Uploaded image preview" style="display:none;" />
+              <video id="previewVideo" class="preview-video" controls style="display:none;"></video>
+              <div id="previewAudio" class="preview-audio-wrapper" style="display:none;">
+                <div class="audio-visual">
+                  <div class="audio-icon">🎵</div>
+                  <div class="audio-waves" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <audio id="audioPlayer" controls></audio>
+              </div>
+              <div id="previewText" class="preview-text-content" style="display:none;"></div>
+              <div class="scan-overlay" id="scanOverlay" aria-hidden="true">
+                <div class="scan-line"></div>
+                <div class="scan-corner tl"></div>
+                <div class="scan-corner tr"></div>
+                <div class="scan-corner bl"></div>
+                <div class="scan-corner br"></div>
+              </div>
+            </div>
+            <div class="media-meta" id="mediaMeta"></div>
+          </div>
+
+          <!-- Processing Indicator -->
+          <div class="processing-card glass-card" id="processingCard" style="display:none;">
+            <div class="processing-header">
+              <div class="processing-spinner" aria-hidden="true">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring inner"></div>
+              </div>
+              <div class="processing-info">
+                <h3 class="processing-title" id="processingTitle">Analyzing Content</h3>
+                <p class="processing-step" id="processingStep">Initializing forensic engine...</p>
+              </div>
+            </div>
+            <div class="processing-stages" id="processingStages" role="list" aria-label="Processing stages"></div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <span class="progress-pct" id="progressPct">0%</span>
+            </div>
+          </div>
+
+          <!-- Results Dashboard -->
+          <div class="results-card glass-card" id="resultsCard" style="display:none;">
+            <div class="results-header">
+              <div class="verdict-badge" id="verdictBadge">
+                <div class="verdict-icon" id="verdictIcon" aria-hidden="true"></div>
+                <div class="verdict-info">
+                  <span class="verdict-label">Detection Result</span>
+                  <h3 class="verdict-title" id="verdictTitle"></h3>
+                </div>
+              </div>
+              <div class="confidence-ring-wrapper" aria-label="Confidence score">
+                <svg class="confidence-ring" width="90" height="90" viewBox="0 0 90 90">
+                  <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" />
+                  <circle cx="45" cy="45" r="38" fill="none" stroke="url(#confGrad)" stroke-width="8"
+                    stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76" id="confidenceArc"
+                    transform="rotate(-90 45 45)" />
+                  <defs>
+                    <linearGradient id="confGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#00d4ff" />
+                      <stop offset="100%" stop-color="#b14fff" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="confidence-center">
+                  <span class="confidence-value" id="confidenceValue">0%</span>
+                  <span class="confidence-label-text">Confidence</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Type Badge -->
+            <div class="content-type-badge" id="contentTypeBadge">
+              <span class="ctb-icon" id="ctbIcon"></span>
+              <span class="ctb-text" id="ctbText"></span>
+            </div>
+
+            <!-- Forensic Analysis Breakdown -->
+            <div class="forensic-breakdown">
+              <h4 class="breakdown-title">Forensic Analysis Breakdown</h4>
+              <div class="forensic-metrics" id="forensicMetrics" role="list" aria-label="Forensic metrics"></div>
+            </div>
+
+            <!-- Explanation -->
+            <div class="explanation-box" id="explanationBox">
+              <div class="explanation-icon" aria-hidden="true">💡</div>
+              <p class="explanation-text" id="explanationText"></p>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="results-actions">
+              <button class="btn btn-primary" id="analyzeAnotherBtn" type="button">Analyze Another</button>
+              <button class="btn btn-outline" id="downloadReportBtn" type="button">Download Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">How <span class="gradient-text">PixelTruth</span> Works</h2>
+        <p class="section-subtitle">Multi-modal forensic analysis across 24+ detection vectors</p>
+      </div>
+      <div class="how-grid" role="list">
+        <div class="how-card glass-card" role="listitem">
+          <div class="how-number">01</div>
+          <div class="how-icon" aria-hidden="true">🖼️</div>
+          <h3 class="how-title">Image Analysis</h3>
+          <p class="how-desc">Examines pixel distributions, noise patterns, EXIF metadata, edge coherence,
+            frequency domain signatures, and compression artifacts across 8 forensic vectors.</p>
+        </div>
+        <div class="how-card glass-card" role="listitem">
+          <div class="how-number">02</div>
+          <div class="how-icon" aria-hidden="true">🎬</div>
+          <h3 class="how-title">Video Analysis</h3>
+          <p class="how-desc">Analyzes container format, temporal coherence, compression entropy, byte
+            distributions, and structural patterns to detect AI video generators like Sora, Runway, and Pika.</p>
+        </div>
+        <div class="how-card glass-card" role="listitem">
+          <div class="how-number">03</div>
+          <div class="how-icon" aria-hidden="true">🎵</div>
+          <h3 class="how-title">Audio Analysis</h3>
+          <p class="how-desc">Scans spectral patterns, noise floor characteristics, amplitude distribution,
+            frequency uniformity, and structural regularity to identify AI speech and music synthesis.</p>
+        </div>
+        <div class="how-card glass-card" role="listitem">
+          <div class="how-number">04</div>
+          <div class="how-icon" aria-hidden="true">📝</div>
+          <h3 class="how-title">Text Analysis</h3>
+          <p class="how-desc">Evaluates burstiness, vocabulary diversity, perplexity, repetition patterns,
+            structural uniformity, and linguistic markers to detect LLM-generated content.</p>
+        </div>
+        <div class="how-card glass-card" role="listitem">
+          <div class="how-number">05</div>
+          <div class="how-icon" aria-hidden="true">🧬</div>
+          <h3 class="how-title">AI Artifact Detection</h3>
+          <p class="how-desc">Identifies characteristic artifacts from diffusion models, GANs, TTS engines,
+            and LLMs including frequency anomalies, spectral smoothness, and statistical fingerprints.</p>
+        </div>
+        <div class="how-card glass-card" role="listitem">
+          <div class="how-number">06</div>
+          <div class="how-icon" aria-hidden="true">🎯</div>
+          <h3 class="how-title">Weighted Classification</h3>
+          <p class="how-desc">Combines all detection vectors through a weighted sigmoid classifier with
+            contextual bonuses, producing a calibrated confidence score and detailed forensic report.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <span class="logo-text">Pixel<span class="logo-accent">Truth</span></span>
+          <p class="footer-tagline">Advanced AI Content Forensics</p>
+        </div>
+        <p class="footer-note">⚠️ Results are based on forensic analysis and should be used as an indicator, not
+          absolute proof. Image, video, and audio files are processed on the server and immediately deleted after
+          analysis. Text is analyzed server-side and never stored.</p>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PixelTruth v3.0. Built with advanced forensic algorithms.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="detector.js"></script>
+</body>
+
+</html>
