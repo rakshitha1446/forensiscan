@@ -11,7 +11,7 @@
 /* =========================================
    CONFIG
    ========================================= */
-const API_BASE = window.location.origin;
+const API_BASE = "http://localhost:3001";
 const API_ANALYZE_FILE = `${API_BASE}/api/analyze`;
 const API_ANALYZE_TEXT = `${API_BASE}/api/analyze-text`;
 
