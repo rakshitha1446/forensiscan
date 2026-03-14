@@ -163,10 +163,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error.' });
 });
 
-/* ── Serve index.html for all non-API routes ────────────── */
-app.get('/{*splat}', (req, res) => {
+/* Serve frontend when opening localhost */
+app.get('/', (req, res) => {
   res.sendFile(path.join(FRONTEND_PATH, 'index.html'));
 });
+
+
 
 /* ── Start ──────────────────────────────────────────────── */
 app.listen(PORT, () => {
