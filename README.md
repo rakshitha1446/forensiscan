@@ -38,3 +38,5 @@ BACKEND → forensic analysis engine
 ## Authors
 
 Rakshitha
+Sreelekha
+Meenu Manoj
